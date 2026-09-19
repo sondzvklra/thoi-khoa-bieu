@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời khóa biểu - THCS Yên Phúc</title>
+    <meta name="description" content="Thời khóa biểu học kỳ 1, năm học 2026-2027 - Trường THCS Yên Phúc">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <div class="header-inner">
+                <div class="header-brand">
+                    <div class="header-logo-badge">THCS</div>
+                    <div class="header-title">
+                        <h1 class="header-school-name">THCS Yên Phúc</h1>
+                        <p class="header-subtitle">Thời khóa biểu · HK1 · 2026–2027</p>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="header-clock" id="headerClock">
+                        <span class="clock-icon">🕒</span>
+                        <span id="currentDate" class="header-date"></span>
+                    </div>
+
+                    <button class="btn-action" id="btnToday" title="Chuyển về hôm nay và tiết hiện tại" aria-label="Hôm nay">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Hôm nay</span>
+                    </button>
+
+                    <button class="btn-action" id="btnPrint" title="In hoặc lưu PDF thời khóa biểu" aria-label="In thời khóa biểu">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                            <rect x="6" y="14" width="12" height="8"></rect>
+                        </svg>
+                        <span>In TKB</span>
+                    </button>
+
+                    <button class="btn-action btn-icon-only" id="themeToggle" title="Chuyển chế độ Sáng / Tối" aria-label="Đổi giao diện">
+                        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- View Mode Switcher Navigation -->
+        <nav class="view-tabs-bar" aria-label="Chế độ xem">
+            <div class="view-tabs-inner">
+                <div class="view-mode-group" role="tablist">
+                    <button class="view-mode-tab is-active" id="tabModeAll" data-mode="all" role="tab" aria-selected="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Toàn trường (Theo ngày)</span>
+                    </button>
+                    <button class="view-mode-tab" id="tabModeClass" data-mode="class" role="tab" aria-selected="false">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Theo Lớp học (Cả tuần)</span>
+                    </button>
+                    <button class="view-mode-tab" id="tabModeTeacher" data-mode="teacher" role="tab" aria-selected="false">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Theo Giáo viên (Lịch dạy)</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Day Tabs (Shown when viewing "All Classes") -->
+        <nav class="day-tabs-bar" id="dayTabsBar" role="tablist" aria-label="Chọn ngày trong tuần">
+            <div class="day-tabs-inner" id="dayTabs">
+                <!-- Rendered by JS -->
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main" id="mainContent">
+            <!-- Controls Bar -->
+            <div class="controls">
+                <div class="controls-inner">
+                    <!-- Session Select (Used in All classes view) -->
+                    <div class="control-group" id="controlGroupSession">
+                        <label for="sessionSelect" class="control-label">Buổi</label>
+                        <select id="sessionSelect" class="control-select" aria-label="Chọn buổi học">
+                            <option value="all">Cả ngày</option>
+                            <option value="morning">Buổi sáng</option>
+                            <option value="afternoon">Buổi chiều</option>
+                        </select>
+                    </div>
+
+                    <!-- Class Select (Used when in Class Mode) -->
+                    <div class="control-group" id="controlGroupClass" style="display: none;">
+                        <label for="classSelect" class="control-label">Chọn Lớp</label>
+                        <select id="classSelect" class="control-select control-select--primary" aria-label="Chọn lớp học">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+
+                    <!-- Teacher Select (Used when in Teacher Mode) -->
+                    <div class="control-group" id="controlGroupTeacher" style="display: none;">
+                        <label for="teacherSelect" class="control-label">Chọn Giáo viên</label>
+                        <select id="teacherSelect" class="control-select control-select--primary" aria-label="Chọn giáo viên">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+
+                    <!-- Search Box -->
+                    <div class="control-group control-group--search">
+                        <div class="search-wrapper">
+                            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input
+                                type="text"
+                                id="searchInput"
+                                class="control-search has-icon"
+                                placeholder="Tìm môn, giáo viên, phòng…"
+                                aria-label="Tìm kiếm môn học hoặc giáo viên">
+                            <button class="search-clear" id="searchClear" aria-label="Xóa tìm kiếm" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Color Legend (Bảng chú giải môn học giúp phân biệt màu cực nhanh) -->
+            <div class="subject-legend" id="subjectLegend">
+                <div class="legend-header">
+                    <span class="legend-title">Bảng mã màu môn học:</span>
+                    <button class="legend-toggle-btn" id="legendToggle" aria-expanded="false" title="Thu gọn / Mở rộng bảng màu">
+                        <span>Chi tiết</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                </div>
+                <div class="legend-items" id="legendItems">
+                    <!-- Populated by JS or CSS -->
+                </div>
+            </div>
+
+            <!-- Filter Chips -->
+            <div class="filter-chips" id="filterChips" style="display: none;">
+                <div class="filter-chips-inner"></div>
+            </div>
+
+            <!-- Schedule Container -->
+            <div class="schedule-wrapper">
+                <div id="scheduleContent" class="schedule">
+                    <!-- Dynamic schedule content -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <div class="footer-inner">
+                <p>&copy; 2026 Trường THCS Yên Phúc · Áp dụng từ 14/09/2026</p>
+                <div class="footer-note">💡 Bấm vào từng tiết học để xem thông tin chi tiết môn & giáo viên phụ trách</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Subject Detail Modal -->
+    <div id="detailModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Đóng">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
